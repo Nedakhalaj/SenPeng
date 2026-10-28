@@ -1,0 +1,62 @@
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# --- Xcode ---
+build/
+DerivedData/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+xcuserdata/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+timeline.xctimeline
+playground.xcworkspace
+*.xcresult
+
+# --- Swift Package Manager ---
+# Package.resolved is committed so dependency versions stay pinned.
+.build/
+.swiftpm/
+Packages/
+
+# --- Fastlane (if added later) ---
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# --- Secrets (never commit) ---
+# Commit Config/Secrets.example.xcconfig with placeholder values instead.
+Config/Secrets.xcconfig
+*.env
+.env*
+!.env.example
+
+# --- Signing (never commit) ---
+*.p12
+*.cer
+*.mobileprovision
+*.provisionprofile
+AuthKey_*.p8
+*.certSigningRequest
+
+# --- Editors ---
+.vscode/
+.idea/
+*.swp
+*~
+
+# --- Claude Code ---
+# Kept local only, not shared on GitHub.
+CLAUDE.md
+CLAUDE.local.md
+.claude/
