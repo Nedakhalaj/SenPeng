@@ -5,9 +5,6 @@ import SwiftUI
 /// Each tab shows a placeholder until its feature is built. The system `TabView`
 /// gets Liquid Glass automatically on iOS 26 and later.
 struct RootView: View {
-
-    // MARK: - Body
-
     var body: some View {
         TabView {
             NavigationStack {
@@ -33,9 +30,6 @@ struct RootView: View {
 
 /// Temporary content for tabs whose feature isn't built yet.
 private struct ComingSoonView: View {
-
-    // MARK: - Body
-
     var body: some View {
         ContentUnavailableView(
             "Coming soon",
@@ -45,7 +39,6 @@ private struct ComingSoonView: View {
     }
 }
 
-// MARK: - Previews
 
 #Preview("Light") {
     RootView()

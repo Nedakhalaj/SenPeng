@@ -6,8 +6,6 @@ import SwiftUI
 @main
 struct SenpengApp: App {
 
-    // MARK: - Body
-
     var body: some Scene {
         WindowGroup {
             RootView()
