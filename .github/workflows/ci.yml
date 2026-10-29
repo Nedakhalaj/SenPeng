@@ -1,0 +1,77 @@
+# Continuous integration for Senpeng.
+# Runs on every pull request to main (and on main itself after a merge):
+#   1. SwiftLint checks the code style.
+#   2. The app is built and the unit tests run on an iPhone simulator.
+# A pull request should only be merged when both jobs are green.
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# The workflow only needs to read the code.
+permissions:
+  contents: read
+
+# A new push to the same branch cancels the run that is still going,
+# so we don't wait for checks on outdated code.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: SwiftLint
+    runs-on: macos-26
+    timeout-minutes: 10
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Run SwiftLint
+        # --strict turns every warning into an error, as the project rules require.
+        run: swiftlint --strict --reporter github-actions-logging
+
+  build-and-test:
+    name: Build and unit tests
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Pick an iPhone simulator
+        id: simulator
+        # Picks an iPhone on the newest installed iOS version, so the job keeps
+        # working when GitHub updates the simulators on its Macs.
+        run: |
+          UDID=$(xcrun simctl list devices available --json | jq -r '
+            [.devices | to_entries[]
+              | select(.key | contains("iOS"))
+              | select(any(.value[]; .name | startswith("iPhone")))]
+            | sort_by(.key) | last
+            | .value | map(select(.name | startswith("iPhone"))) | first
+            | .udid')
+          echo "Using simulator $UDID"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
+      - name: Build and run unit tests
+        # UI tests are slower and run locally before a PR; CI runs the unit tests.
+        # Code signing is turned off because the simulator doesn't need it.
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Senpeng.xcodeproj \
+            -scheme Senpeng \
+            -destination "id=${{ steps.simulator.outputs.udid }}" \
+            -only-testing:SenpengTests \
+            CODE_SIGNING_ALLOWED=NO
