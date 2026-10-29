@@ -7,7 +7,6 @@ import Testing
 @Suite("Project setup")
 struct ProjectSetupTests {
 
-
     /// The App Store requires a privacy manifest in the app bundle.
     @Test("Privacy manifest is included in the app")
     func privacyManifestIsBundled() {

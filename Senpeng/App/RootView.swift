@@ -39,7 +39,6 @@ private struct ComingSoonView: View {
     }
 }
 
-
 #Preview("Light") {
     RootView()
 }
