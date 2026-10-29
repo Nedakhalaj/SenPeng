@@ -1,0 +1,11 @@
+import Foundation
+import os
+
+extension Logger {
+
+    /// The subsystem shared by all of the app's logs, so they're easy to filter in Console.
+    private static let subsystem = Bundle.main.bundleIdentifier ?? "com.nedakhalaj.senpeng"
+
+    /// Logs from network requests.
+    static let networking = Logger(subsystem: subsystem, category: "Networking")
+}

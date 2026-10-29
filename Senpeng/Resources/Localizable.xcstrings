@@ -41,12 +41,42 @@
         }
       }
     },
+    "Something went wrong. Try again." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Något gick fel. Försök igen."
+          }
+        }
+      }
+    },
     "This part of Senpeng is being built." : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Den här delen av Senpeng byggs just nu."
+          }
+        }
+      }
+    },
+    "Travel information isn't available right now. Try again in a moment." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reseinformationen är inte tillgänglig just nu. Försök igen om en stund."
+          }
+        }
+      }
+    },
+    "You're offline. Check your connection and try again." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du är offline. Kontrollera din anslutning och försök igen."
           }
         }
       }
