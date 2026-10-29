@@ -25,6 +25,7 @@ struct RootView: View {
             }
             .tabItem { Label("Settings", systemImage: "gearshape") }
         }
+        .tint(AppColor.accent)
     }
 }
 
@@ -36,6 +37,7 @@ private struct ComingSoonView: View {
             systemImage: "hammer",
             description: Text("This part of Senpeng is being built.")
         )
+        .appBackground()
     }
 }
 
