@@ -1,0 +1,43 @@
+// Shared.xcconfig
+// Build settings used by every target in both Debug and Release.
+// Target-specific settings (bundle IDs, Info.plist keys) live in the project file.
+
+// MARK: - Platform
+
+SDKROOT = iphoneos
+IPHONEOS_DEPLOYMENT_TARGET = 17.0
+// iPhone only for version 1.0 (see PRD open questions about iPad).
+TARGETED_DEVICE_FAMILY = 1
+
+// MARK: - Versioning
+
+MARKETING_VERSION = 1.0.0
+CURRENT_PROJECT_VERSION = 1
+
+// MARK: - Swift
+
+SWIFT_VERSION = 6.0
+// Full data-race checking; the project must build with zero concurrency warnings.
+SWIFT_STRICT_CONCURRENCY = complete
+SWIFT_TREAT_WARNINGS_AS_ERRORS = YES
+GCC_TREAT_WARNINGS_AS_ERRORS = YES
+
+// MARK: - Localization
+
+LOCALIZATION_PREFERS_STRING_CATALOGS = YES
+// Lets Xcode collect new SwiftUI strings into Localizable.xcstrings automatically.
+SWIFT_EMIT_LOC_STRINGS = YES
+
+// MARK: - Signing
+
+CODE_SIGN_STYLE = Automatic
+// Set your Apple Developer team in Xcode (Signing & Capabilities); it is stored per user.
+DEVELOPMENT_TEAM =
+
+// MARK: - General
+
+ALWAYS_SEARCH_USER_PATHS = NO
+CLANG_ENABLE_MODULES = YES
+DEAD_CODE_STRIPPING = YES
+ENABLE_STRICT_OBJC_MSGSEND = YES
+ENABLE_USER_SCRIPT_SANDBOXING = YES

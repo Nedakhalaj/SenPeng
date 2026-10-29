@@ -9,6 +9,12 @@ If an SL trip is 20+ minutes late, you can get money back, but you have to apply
 ## Tech
 Swift 6 · SwiftUI · MVVM · SwiftData · iOS 17+ (Liquid Glass on iOS 26)
 
+## Getting started
+1. Install Xcode 26 or later.
+2. Copy `Config/Secrets.example.xcconfig` to `Config/Secrets.xcconfig` and add your keys (optional for building).
+3. Open `Senpeng.xcodeproj` and run the `Senpeng` scheme.
+4. Optional: install SwiftLint (`brew install swiftlint`) and run `swiftlint --strict`.
+
 ## Contributing
 - One feature = one branch = one pull request. Never commit directly to `main`.
 
