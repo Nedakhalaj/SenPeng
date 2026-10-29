@@ -1,0 +1,16 @@
+// Release.xcconfig
+// Settings for TestFlight and App Store builds: optimized, with crash symbols.
+
+#include "Shared.xcconfig"
+
+// Local API keys. The file is git-ignored and optional, so the project
+// still builds without it. Copy Secrets.example.xcconfig to create it.
+#include? "Secrets.xcconfig"
+
+SWIFT_OPTIMIZATION_LEVEL = -O
+SWIFT_COMPILATION_MODE = wholemodule
+// dSYM files are needed to read crash reports from App Store Connect.
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+ENABLE_NS_ASSERTIONS = NO
+VALIDATE_PRODUCT = YES
+MTL_ENABLE_DEBUG_INFO = NO

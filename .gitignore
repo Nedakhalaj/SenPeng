@@ -59,4 +59,5 @@ AuthKey_*.p8
 # Kept local only, not shared on GitHub.
 CLAUDE.md
 CLAUDE.local.md
+PRD.md
 .claude/
