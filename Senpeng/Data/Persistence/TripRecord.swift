@@ -19,8 +19,10 @@ extension SenpengSchemaV1 {
         var journeyID: String?
         var originID: String
         var originName: String
+        var originGlobalID: String
         var destinationID: String
         var destinationName: String
+        var destinationGlobalID: String
         var scheduledDeparture: Date
         var scheduledArrival: Date
         var actualArrival: Date?
@@ -38,8 +40,10 @@ extension SenpengSchemaV1 {
             journeyID = trip.journeyID
             originID = trip.origin.id
             originName = trip.origin.name
+            originGlobalID = trip.origin.globalID
             destinationID = trip.destination.id
             destinationName = trip.destination.name
+            destinationGlobalID = trip.destination.globalID
             scheduledDeparture = trip.scheduledDeparture
             scheduledArrival = trip.scheduledArrival
             actualArrival = trip.actualArrival
@@ -80,8 +84,8 @@ extension SenpengSchemaV1 {
                 transportMode: transportMode,
                 lineDestination: lineDestination,
                 journeyID: journeyID,
-                origin: TransportStop(id: originID, name: originName),
-                destination: TransportStop(id: destinationID, name: destinationName),
+                origin: TransportStop(id: originID, name: originName, globalID: originGlobalID),
+                destination: TransportStop(id: destinationID, name: destinationName, globalID: destinationGlobalID),
                 scheduledDeparture: scheduledDeparture,
                 scheduledArrival: scheduledArrival,
                 actualArrival: actualArrival,

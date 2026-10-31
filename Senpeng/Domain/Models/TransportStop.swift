@@ -8,4 +8,7 @@ struct TransportStop: Equatable, Hashable, Sendable {
 
     /// The stop's name as shown to the user.
     let name: String
+
+    /// SL's global stop ID, used to ask the journey planner about a saved trip later.
+    let globalID: String
 }

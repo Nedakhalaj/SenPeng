@@ -11,6 +11,16 @@
         }
       }
     },
+    "Arrives %@" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ankommer %@"
+          }
+        }
+      }
+    },
     "Bus" : {
       "localizations" : {
         "sv" : {
@@ -21,12 +31,52 @@
         }
       }
     },
+    "Cancel" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avbryt"
+          }
+        }
+      }
+    },
     "Cancelled" : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inställd"
+          }
+        }
+      }
+    },
+    "Change stop" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Byt hållplats"
+          }
+        }
+      }
+    },
+    "Checking arrival time…" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontrollerar ankomsttid…"
+          }
+        }
+      }
+    },
+    "Choose where you get off" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Välj var du kliver av"
           }
         }
       }
@@ -51,6 +101,16 @@
         }
       }
     },
+    "Couldn't check the arrival time" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunde inte kontrollera ankomsttiden"
+          }
+        }
+      }
+    },
     "Couldn't load departures" : {
       "localizations" : {
         "sv" : {
@@ -71,6 +131,16 @@
         }
       }
     },
+    "Expected %@" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beräknad %@"
+          }
+        }
+      }
+    },
     "Ferry" : {
       "localizations" : {
         "sv" : {
@@ -87,6 +157,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hitta din hållplats"
+          }
+        }
+      }
+    },
+    "I'm on this train" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jag åker med den här"
           }
         }
       }
@@ -171,12 +251,32 @@
         }
       }
     },
+    "Search for the stop where you get off." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sök efter hållplatsen där du kliver av."
+          }
+        }
+      }
+    },
     "Search for the stop where you get on." : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sök efter hållplatsen där du kliver på."
+          }
+        }
+      }
+    },
+    "Search for your stop" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sök din hållplats"
           }
         }
       }
@@ -251,12 +351,32 @@
         }
       }
     },
+    "Where do you get off?" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Var kliver du av?"
+          }
+        }
+      }
+    },
     "You're offline. Check your connection and try again." : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Du är offline. Kontrollera din anslutning och försök igen."
+          }
+        }
+      }
+    },
+    "Your trip" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Din resa"
           }
         }
       }
