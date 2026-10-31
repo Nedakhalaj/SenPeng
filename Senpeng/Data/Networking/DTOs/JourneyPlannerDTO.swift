@@ -20,6 +20,14 @@ struct PlannerLegDTO: Decodable, Sendable {
 
     /// The vehicle. Missing or without a line for walking legs.
     let transportation: PlannerTransportationDTO?
+
+    /// `true` when the leg's estimated times come from live data.
+    ///
+    /// Without it, the planner still sends estimated times, but they are only copies of
+    /// the timetable (checked against the live API on 2026-10-31), so they must not be
+    /// trusted: a late vehicle would look on time. SL leaves the field out when it's not
+    /// live, so it has to be optional here.
+    let isRealtimeControlled: Bool? // swiftlint:disable:this discouraged_optional_boolean
 }
 
 /// Where a leg starts or ends, with times in UTC, for example `2026-10-31T13:59:24Z`.

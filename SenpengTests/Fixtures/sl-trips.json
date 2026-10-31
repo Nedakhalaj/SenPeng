@@ -4,20 +4,15 @@
       "legs": [
         {
           "origin": {
-            "name": "Slussen, Stockholm",
-            "departureTimePlanned": "2026-10-31T13:59:24Z",
-            "departureTimeEstimated": "2026-10-31T13:59:24Z"
+            "departureTimePlanned": "2026-10-31T12:02:54Z",
+            "departureTimeEstimated": "2026-10-31T12:02:54Z"
           },
           "destination": {
-            "name": "T-Centralen, Stockholm",
-            "arrivalTimePlanned": "2026-10-31T14:02:36Z",
-            "arrivalTimeEstimated": "2026-10-31T14:02:36Z"
+            "arrivalTimePlanned": "2026-10-31T12:06:06Z",
+            "arrivalTimeEstimated": "2026-10-31T12:06:06Z"
           },
           "transportation": {
-            "disassembledName": "14",
-            "destination": {
-              "name": "Mörby centrum"
-            }
+            "disassembledName": "14"
           }
         }
       ]
@@ -25,21 +20,17 @@
     {
       "legs": [
         {
+          "isRealtimeControlled": true,
           "origin": {
-            "name": "Slussen, Stockholm",
-            "departureTimePlanned": "2026-10-31T14:01:48Z",
-            "departureTimeEstimated": "2026-10-31T14:01:48Z"
+            "departureTimePlanned": "2026-10-31T12:29:48Z",
+            "departureTimeEstimated": "2026-10-31T12:31:00Z"
           },
           "destination": {
-            "name": "T-Centralen, Stockholm",
-            "arrivalTimePlanned": "2026-10-31T14:05:00Z",
-            "arrivalTimeEstimated": "2026-10-31T14:05:00Z"
+            "arrivalTimePlanned": "2026-10-31T12:33:00Z",
+            "arrivalTimeEstimated": "2026-10-31T12:33:18Z"
           },
           "transportation": {
-            "disassembledName": "18",
-            "destination": {
-              "name": "Vällingby"
-            }
+            "disassembledName": "17"
           }
         }
       ]
@@ -47,21 +38,35 @@
     {
       "legs": [
         {
+          "isRealtimeControlled": true,
           "origin": {
-            "name": "Slussen, Stockholm",
-            "departureTimePlanned": "2026-10-31T14:02:54Z",
-            "departureTimeEstimated": "2026-10-31T14:02:54Z"
+            "departureTimePlanned": "2026-10-31T12:32:54Z",
+            "departureTimeEstimated": "2026-10-31T12:33:06Z"
           },
           "destination": {
-            "name": "T-Centralen, Stockholm",
-            "arrivalTimePlanned": "2026-10-31T14:06:06Z",
-            "arrivalTimeEstimated": "2026-10-31T14:06:06Z"
+            "arrivalTimePlanned": "2026-10-31T12:36:06Z",
+            "arrivalTimeEstimated": "2026-10-31T12:35:36Z"
           },
           "transportation": {
-            "disassembledName": "14",
-            "destination": {
-              "name": "Mörby centrum"
-            }
+            "disassembledName": "14"
+          }
+        }
+      ]
+    },
+    {
+      "legs": [
+        {
+          "isRealtimeControlled": true,
+          "origin": {
+            "departureTimePlanned": "2026-10-31T12:33:18Z",
+            "departureTimeEstimated": "2026-10-31T12:34:24Z"
+          },
+          "destination": {
+            "arrivalTimePlanned": "2026-10-31T12:36:30Z",
+            "arrivalTimeEstimated": "2026-10-31T12:36:54Z"
+          },
+          "transportation": {
+            "disassembledName": "19"
           }
         }
       ]

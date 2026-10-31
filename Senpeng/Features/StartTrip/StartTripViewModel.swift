@@ -116,7 +116,8 @@ final class StartTripViewModel {
     func choose(_ destination: Site) async {
         step = .checkingArrival(destination)
         do {
-            let arrival = try await arrivalRepository.arrival(of: departure, from: origin, to: destination)
+            let query = ArrivalQuery(departure: departure, origin: origin, destination: destination)
+            let arrival = try await arrivalRepository.arrival(for: query)
             step = .readyToStart(destination, arrival)
         } catch {
             if let message = error.userFacingError {

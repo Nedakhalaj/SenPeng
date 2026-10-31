@@ -26,4 +26,20 @@ struct ArrivalEstimateTests {
 
         #expect(estimate.expectedDelay == expected)
     }
+
+    @Test(
+        "Expected minutes late are whole minutes, never negative, and unknown without live data",
+        arguments: [
+            (nil, nil),
+            (0, 0),
+            (59, 0),
+            (60, 1),
+            (-42, 0)
+        ] as [(TimeInterval?, Int?)]
+    )
+    func expectedMinutesLate(lateBy seconds: TimeInterval?, expected: Int?) {
+        let estimate = ArrivalEstimate(scheduled: scheduled, expected: seconds.map { scheduled.addingTimeInterval($0) })
+
+        #expect(estimate.expectedMinutesLate == expected)
+    }
 }

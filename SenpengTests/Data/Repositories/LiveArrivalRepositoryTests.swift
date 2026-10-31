@@ -4,64 +4,65 @@ import Testing
 
 /// Checks how a departure is matched to the journey planner's trips.
 ///
-/// Uses `sl-trips.json`: a real answer for Slussen → T-Centralen with three direct
-/// trips: line 14 at 13:59:24, line 18 at 14:01:48 and line 14 at 14:02:54 (UTC).
+/// Uses `sl-trips.json`: real answers for Slussen → T-Centralen on 2026-10-31 (UTC):
+/// - line 14 at 12:02:54, no live data: its "estimated" arrival only copies the timetable
+/// - line 17 at 12:29:48, live: planned arrival 12:33:00, expected 12:33:18
+/// - line 14 at 12:32:54, live: planned arrival 12:36:06, expected 12:35:36
+/// - line 19 at 12:33:18, live: planned arrival 12:36:30, expected 12:36:54
 @Suite("Live arrival repository")
 struct LiveArrivalRepositoryTests {
 
-    private let slussen = Site(id: "9192", name: "Slussen", area: nil, aliases: [], globalID: "9091001000009192")
-    private let centralen = Site(id: "9001", name: "T-Centralen", area: nil, aliases: [], globalID: "9091001000009001")
-
-    @Test("The departure on the same line at the same time gives its arrival times")
+    @Test("The departure on the same line at the same time gives its live arrival")
     func matchesDeparture() async throws {
-        let departure = try makeDeparture(line: "14", scheduledUTC: "2026-10-31T13:59:24Z")
+        let arrival = try await lookUp(line: "19", scheduledUTC: "2026-10-31T12:33:18Z")
 
-        let arrival = try await repository().arrival(of: departure, from: slussen, to: centralen)
-
-        #expect(arrival.scheduled == (try utc("2026-10-31T14:02:36Z")))
-        #expect(arrival.expected == (try utc("2026-10-31T14:02:36Z")))
+        #expect(arrival.scheduled == (try utc("2026-10-31T12:36:30Z")))
+        #expect(arrival.expected == (try utc("2026-10-31T12:36:54Z")))
     }
 
-    @Test("The next departure on the same line isn't mixed up with the chosen one")
+    @Test("Without the live marker, the expected arrival is unknown, not the timetable's copy")
+    func noLiveDataMeansUnknown() async throws {
+        let arrival = try await lookUp(line: "14", scheduledUTC: "2026-10-31T12:02:54Z")
+
+        #expect(arrival.scheduled == (try utc("2026-10-31T12:06:06Z")))
+        #expect(arrival.expected == nil)
+    }
+
+    @Test("Another departure on the same line isn't mixed up with the chosen one")
     func picksTheRightTrip() async throws {
-        let departure = try makeDeparture(line: "14", scheduledUTC: "2026-10-31T14:02:54Z")
+        let arrival = try await lookUp(line: "14", scheduledUTC: "2026-10-31T12:32:54Z")
 
-        let arrival = try await repository().arrival(of: departure, from: slussen, to: centralen)
-
-        #expect(arrival.scheduled == (try utc("2026-10-31T14:06:06Z")))
+        #expect(arrival.scheduled == (try utc("2026-10-31T12:36:06Z")))
+        #expect(arrival.expected == (try utc("2026-10-31T12:35:36Z")))
     }
 
     @Test("A small difference in the timetable time still matches")
     func toleratesSmallDifference() async throws {
-        let departure = try makeDeparture(line: "18", scheduledUTC: "2026-10-31T14:02:30Z")
+        let arrival = try await lookUp(line: "17", scheduledUTC: "2026-10-31T12:30:30Z")
 
-        let arrival = try await repository().arrival(of: departure, from: slussen, to: centralen)
-
-        #expect(arrival.scheduled == (try utc("2026-10-31T14:05:00Z")))
+        #expect(arrival.scheduled == (try utc("2026-10-31T12:33:00Z")))
     }
 
     @Test(
         "A departure that doesn't match any trip isn't on the route",
         arguments: [
-            ("19", "2026-10-31T13:59:24Z"),
-            ("14", "2026-10-31T14:30:00Z")
+            ("18", "2026-10-31T12:32:54Z"),
+            ("14", "2026-10-31T13:30:00Z")
         ]
     )
     func notOnRoute(line: String, scheduledUTC: String) async throws {
-        let departure = try makeDeparture(line: line, scheduledUTC: scheduledUTC)
-
         await #expect(throws: ArrivalLookupError.notOnRoute) {
-            try await repository().arrival(of: departure, from: slussen, to: centralen)
+            try await lookUp(line: line, scheduledUTC: scheduledUTC)
         }
     }
 
     @Test("A network error is passed on")
     func networkError() async throws {
-        let departure = try makeDeparture(line: "14", scheduledUTC: "2026-10-31T13:59:24Z")
         let repository = LiveArrivalRepository(apiClient: StubAPIClient(result: .failure(.offline)))
+        let query = try makeQuery(line: "14", scheduledUTC: "2026-10-31T12:32:54Z")
 
         await #expect(throws: ArrivalLookupError.network(.offline)) {
-            try await repository.arrival(of: departure, from: slussen, to: centralen)
+            try await repository.arrival(for: query)
         }
     }
 
@@ -72,16 +73,29 @@ struct LiveArrivalRepositoryTests {
         #expect(ArrivalLookupError.network(.cancelled).userFacingError == nil)
     }
 
-    /// A repository that gets the real answer in `sl-trips.json`.
-    private func repository() throws -> LiveArrivalRepository {
-        let data = try Fixture.data(named: "sl-trips")
-        let response = try JSONDecoder().decode(TripsResponseDTO.self, from: data)
-        return LiveArrivalRepository(apiClient: StubAPIClient(result: .success(response)))
+    @Test("A query from a saved trip asks about that trip's line, time and stops")
+    func queryFromTrip() {
+        let trip = TripFactory.make()
+
+        let query = ArrivalQuery(trip: trip)
+
+        #expect(query.line == "14")
+        #expect(query.scheduledDeparture == trip.scheduledDeparture)
+        #expect(query.originGlobalID == "9091001000009192")
+        #expect(query.destinationGlobalID == "9091001000009001")
     }
 
-    /// A departure from Slussen on a line at a timetable time given in UTC.
-    private func makeDeparture(line: String, scheduledUTC: String) throws -> Departure {
-        Departure(
+    /// Looks up a departure in the real answer in `sl-trips.json`.
+    private func lookUp(line: String, scheduledUTC: String) async throws -> ArrivalEstimate {
+        let data = try Fixture.data(named: "sl-trips")
+        let response = try JSONDecoder().decode(TripsResponseDTO.self, from: data)
+        let repository = LiveArrivalRepository(apiClient: StubAPIClient(result: .success(response)))
+        return try await repository.arrival(for: try makeQuery(line: line, scheduledUTC: scheduledUTC))
+    }
+
+    /// A query for a departure from Slussen to T-Centralen, at a timetable time in UTC.
+    private func makeQuery(line: String, scheduledUTC: String) throws -> ArrivalQuery {
+        let departure = Departure(
             id: "test",
             journeyID: "test",
             line: line,
@@ -90,6 +104,11 @@ struct LiveArrivalRepositoryTests {
             scheduled: try utc(scheduledUTC),
             expected: nil,
             isCancelled: false
+        )
+        return ArrivalQuery(
+            departure: departure,
+            origin: Site(id: "9192", name: "Slussen", area: nil, aliases: [], globalID: "9091001000009192"),
+            destination: Site(id: "9001", name: "T-Centralen", area: nil, aliases: [], globalID: "9091001000009001")
         )
     }
 

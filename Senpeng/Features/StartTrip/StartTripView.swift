@@ -9,10 +9,16 @@ struct StartTripView: View {
     /// Closes the sheet.
     @Environment(\.dismiss) private var dismiss
 
+    /// Runs when the trip has been saved.
+    private let onStarted: () -> Void
+
     /// Creates the sheet.
-    /// - Parameter viewModel: The screen's logic, set up with the chosen departure.
-    init(viewModel: StartTripViewModel) {
+    /// - Parameters:
+    ///   - viewModel: The screen's logic, set up with the chosen departure.
+    ///   - onStarted: Runs when the trip has been saved.
+    init(viewModel: StartTripViewModel, onStarted: @escaping () -> Void = {}) {
         _viewModel = State(initialValue: viewModel)
+        self.onStarted = onStarted
     }
 
     var body: some View {
@@ -34,6 +40,7 @@ struct StartTripView: View {
         .sensoryFeedback(.success, trigger: viewModel.step == .saved)
         .onChange(of: viewModel.step) { _, step in
             if step == .saved {
+                onStarted()
                 dismiss()
             }
         }
