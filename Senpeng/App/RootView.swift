@@ -5,10 +5,14 @@ import SwiftUI
 /// Each tab shows a placeholder until its feature is built. The system `TabView`
 /// gets Liquid Glass automatically on iOS 26 and later.
 struct RootView: View {
+
+    /// The app's building blocks, passed on to each tab's screen.
+    let container: AppContainer
+
     var body: some View {
         TabView {
             NavigationStack {
-                ComingSoonView()
+                StopSearchView(repository: container.siteRepository)
                     .navigationTitle("Now")
             }
             .tabItem { Label("Now", systemImage: "tram.fill") }
@@ -42,10 +46,10 @@ private struct ComingSoonView: View {
 }
 
 #Preview("Light") {
-    RootView()
+    RootView(container: .preview)
 }
 
 #Preview("Dark") {
-    RootView()
+    RootView(container: .preview)
         .preferredColorScheme(.dark)
 }
