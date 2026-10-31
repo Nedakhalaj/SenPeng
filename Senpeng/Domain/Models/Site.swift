@@ -23,6 +23,6 @@ struct Site: Identifiable, Equatable, Hashable, Sendable {
 
     /// The stop as saved in a trip.
     var transportStop: TransportStop {
-        TransportStop(id: id, name: name)
+        TransportStop(id: id, name: name, globalID: globalID)
     }
 }
