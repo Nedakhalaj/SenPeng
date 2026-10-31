@@ -11,6 +11,16 @@
         }
       }
     },
+    "Arrived %@" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Framme %@"
+          }
+        }
+      }
+    },
     "Arrives %@" : {
       "localizations" : {
         "sv" : {
@@ -131,6 +141,16 @@
         }
       }
     },
+    "Done" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klar"
+          }
+        }
+      }
+    },
     "Expected %@" : {
       "localizations" : {
         "sv" : {
@@ -231,12 +251,62 @@
         }
       }
     },
+    "No live data yet" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen realtid än"
+          }
+        }
+      }
+    },
     "Now" : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nu"
+          }
+        }
+      }
+    },
+    "On time" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I tid"
+          }
+        }
+      }
+    },
+    "Open Senpeng when you arrive, so the real arrival time can be saved." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öppna Senpeng när du är framme, så sparas den verkliga ankomsttiden."
+          }
+        }
+      }
+    },
+    "Remove this trip?" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta bort den här resan?"
+          }
+        }
+      }
+    },
+    "Remove trip" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ta bort resan"
           }
         }
       }
@@ -287,6 +357,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inställningar"
+          }
+        }
+      }
+    },
+    "Show your trip" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visa din resa"
           }
         }
       }

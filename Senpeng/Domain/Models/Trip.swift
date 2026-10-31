@@ -99,4 +99,24 @@ struct Trip: Identifiable, Equatable, Sendable {
         }
         return .seconds(actualArrival.timeIntervalSince(scheduledArrival))
     }
+
+    /// How many whole minutes late the vehicle arrived, or `nil` while unknown. Never negative.
+    var minutesLate: Int? {
+        guard let actualArrival else {
+            return nil
+        }
+        return max(0, Int(actualArrival.timeIntervalSince(scheduledArrival) / 60))
+    }
+
+    /// Whether the user is still on this trip, so the app should follow it.
+    ///
+    /// A trip stops being followed once its real arrival is known, or 2 hours after
+    /// its planned arrival. Longer delays are rare, and live data is gone by then.
+    ///
+    /// - Parameter date: The current time.
+    /// - Returns: `true` while the trip should be followed.
+    func isActive(at date: Date) -> Bool {
+        let followingEnds = scheduledArrival.addingTimeInterval(2 * 60 * 60)
+        return actualArrival == nil && date <= followingEnds
+    }
 }

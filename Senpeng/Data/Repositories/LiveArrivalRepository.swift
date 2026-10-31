@@ -22,16 +22,12 @@ struct LiveArrivalRepository: ArrivalRepository {
         self.apiClient = apiClient
     }
 
-    func arrival(
-        of departure: Departure,
-        from origin: Site,
-        to destination: Site
-    ) async throws(ArrivalLookupError) -> ArrivalEstimate {
+    func arrival(for query: ArrivalQuery) async throws(ArrivalLookupError) -> ArrivalEstimate {
         // Ask from one minute before, so the chosen departure is among the first results.
         let endpoint = JourneyPlannerAPI.directTrips(
-            from: origin.globalID,
-            to: destination.globalID,
-            departingAt: departure.scheduled.addingTimeInterval(-60)
+            from: query.originGlobalID,
+            to: query.destinationGlobalID,
+            departingAt: query.scheduledDeparture.addingTimeInterval(-60)
         )
 
         let response: TripsResponseDTO
@@ -41,31 +37,33 @@ struct LiveArrivalRepository: ArrivalRepository {
             throw .network(error)
         }
 
-        guard let estimate = Self.match(departure, in: response) else {
+        guard let estimate = Self.match(query, in: response) else {
             throw .notOnRoute
         }
         return estimate
     }
 
-    /// Finds the leg that is the given departure, and returns its arrival times.
+    /// Finds the leg that is the queried departure, and returns its arrival times.
     /// - Parameters:
-    ///   - departure: The departure the user is on.
+    ///   - query: The departure the user is on.
     ///   - response: The journey planner's answer.
     /// - Returns: The arrival at the destination, or `nil` if no leg matches.
-    static func match(_ departure: Departure, in response: TripsResponseDTO) -> ArrivalEstimate? {
+    private static func match(_ query: ArrivalQuery, in response: TripsResponseDTO) -> ArrivalEstimate? {
         let legs = (response.journeys ?? []).flatMap(\.legs)
         for leg in legs {
             guard
-                leg.transportation?.disassembledName == departure.line,
+                leg.transportation?.disassembledName == query.line,
                 let plannedDeparture = date(from: leg.origin.departureTimePlanned),
-                abs(plannedDeparture.timeIntervalSince(departure.scheduled)) <= matchTolerance,
+                abs(plannedDeparture.timeIntervalSince(query.scheduledDeparture)) <= matchTolerance,
                 let plannedArrival = date(from: leg.destination.arrivalTimePlanned)
             else {
                 continue
             }
+            // Estimated times without the live marker are copies of the timetable.
+            let isLive = leg.isRealtimeControlled == true
             return ArrivalEstimate(
                 scheduled: plannedArrival,
-                expected: date(from: leg.destination.arrivalTimeEstimated)
+                expected: isLive ? date(from: leg.destination.arrivalTimeEstimated) : nil
             )
         }
         return nil
