@@ -201,6 +201,16 @@
         }
       }
     },
+    "This departure doesn't stop at the stop you chose." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den här avgången stannar inte vid hållplatsen du valde."
+          }
+        }
+      }
+    },
     "This part of Senpeng is being built." : {
       "localizations" : {
         "sv" : {

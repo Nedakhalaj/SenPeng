@@ -7,7 +7,7 @@ import Testing
 @Suite("Departures view model")
 struct DeparturesViewModelTests {
 
-    private let site = Site(id: "9192", name: "Slussen", area: nil, aliases: [])
+    private let site = Site(id: "9192", name: "Slussen", area: nil, aliases: [], globalID: "9091001000009192")
     private let departures = PreviewDepartureRepository.sampleDepartures(from: TripFactory.referenceDate)
 
     @Test("Loading shows the departures")

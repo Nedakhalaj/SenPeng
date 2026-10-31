@@ -13,12 +13,12 @@ struct PreviewSiteRepository: SiteRepository {
 
     /// A few real stops for previews.
     static let sampleSites: [Site] = [
-        Site(id: "9192", name: "Slussen", area: nil, aliases: []),
-        Site(id: "9194", name: "Slussen/Stadsgården", area: nil, aliases: []),
-        Site(id: "9001", name: "T-Centralen", area: nil, aliases: []),
-        Site(id: "9206", name: "Östermalmstorg", area: nil, aliases: []),
-        Site(id: "9710", name: "Bålsta", area: nil, aliases: []),
-        Site(id: "5299", name: "Bålsta", area: "Gottröra", aliases: [])
+        Site(id: "9192", name: "Slussen", area: nil, aliases: [], globalID: "9091001000009192"),
+        Site(id: "9194", name: "Slussen/Stadsgården", area: nil, aliases: [], globalID: "9091001000009194"),
+        Site(id: "9001", name: "T-Centralen", area: nil, aliases: [], globalID: "9091001000009001"),
+        Site(id: "9206", name: "Östermalmstorg", area: nil, aliases: [], globalID: "9091001000009206"),
+        Site(id: "9710", name: "Bålsta", area: nil, aliases: [], globalID: "9091001000009710"),
+        Site(id: "5299", name: "Bålsta", area: "Gottröra", aliases: [], globalID: "9091001000005299")
     ]
 }
 #endif

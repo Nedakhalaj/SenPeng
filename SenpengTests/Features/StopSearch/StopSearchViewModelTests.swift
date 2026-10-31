@@ -7,8 +7,8 @@ import Testing
 @Suite("Stop search view model")
 struct StopSearchViewModelTests {
 
-    private let slussen = Site(id: "9192", name: "Slussen", area: nil, aliases: [])
-    private let centralen = Site(id: "9001", name: "T-Centralen", area: nil, aliases: [])
+    private let slussen = Site(id: "9192", name: "Slussen", area: nil, aliases: [], globalID: "9091001000009192")
+    private let centralen = Site(id: "9001", name: "T-Centralen", area: nil, aliases: [], globalID: "9091001000009001")
 
     @Test("Starts idle, before the screen appears")
     func startsIdle() {

@@ -15,6 +15,9 @@ enum UserFacingError: Error, Equatable, Sendable {
     /// Something unexpected went wrong.
     case unexpected
 
+    /// The chosen departure doesn't stop at the chosen destination.
+    case notOnRoute
+
     /// The message shown to the user, from the String Catalog.
     var message: LocalizedStringResource {
         switch self {
@@ -24,6 +27,8 @@ enum UserFacingError: Error, Equatable, Sendable {
             "Travel information isn't available right now. Try again in a moment."
         case .unexpected:
             "Something went wrong. Try again."
+        case .notOnRoute:
+            "This departure doesn't stop at the stop you chose."
         }
     }
 }

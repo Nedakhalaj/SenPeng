@@ -17,8 +17,15 @@ struct LiveSiteRepositoryTests {
         let sites = try await setup.repository().sites()
 
         #expect(sites.count == 9)
-        #expect(sites.contains(Site(id: "9192", name: "Slussen", area: nil, aliases: [])))
-        #expect(sites.contains(Site(id: "408", name: "Höganäs", area: "Tynningö", aliases: ["Höganäs brygga"])))
+        #expect(sites.contains(Site(id: "9192", name: "Slussen", area: nil, aliases: [], globalID: "9091001000009192")))
+        let hoganas = Site(
+            id: "408",
+            name: "Höganäs",
+            area: "Tynningö",
+            aliases: ["Höganäs brygga"],
+            globalID: "9091001000000408"
+        )
+        #expect(sites.contains(hoganas))
         #expect(setup.requestCount == 1)
     }
 
