@@ -1,12 +1,62 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld min late" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld min sen"
+          }
+        }
+      }
+    },
+    "Bus" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buss"
+          }
+        }
+      }
+    },
+    "Cancelled" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inställd"
+          }
+        }
+      }
+    },
     "Coming soon" : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kommer snart"
+          }
+        }
+      }
+    },
+    "Commuter train" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pendeltåg"
+          }
+        }
+      }
+    },
+    "Couldn't load departures" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunde inte ladda avgångar"
           }
         }
       }
@@ -21,12 +71,32 @@
         }
       }
     },
+    "Ferry" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Båt"
+          }
+        }
+      }
+    },
     "Find your stop" : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hitta din hållplats"
+          }
+        }
+      }
+    },
+    "Loading departures…" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laddar avgångar…"
           }
         }
       }
@@ -41,12 +111,42 @@
         }
       }
     },
+    "Metro" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tunnelbana"
+          }
+        }
+      }
+    },
     "My trips" : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mina resor"
+          }
+        }
+      }
+    },
+    "No departures" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inga avgångar"
+          }
+        }
+      }
+    },
+    "No departures in the next hour." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inga avgångar den närmaste timmen."
           }
         }
       }
@@ -107,6 +207,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Den här delen av Senpeng byggs just nu."
+          }
+        }
+      }
+    },
+    "Tram" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spårvagn"
           }
         }
       }

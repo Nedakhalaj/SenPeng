@@ -23,4 +23,16 @@ enum SLTransportAPI {
             queryItems: [URLQueryItem(name: "expand", value: "false")]
         )
     }
+
+    /// The departures from a stop in the next hour, with real-time expected times.
+    /// - Parameter siteID: SL's site ID, for example "9192" for Slussen.
+    static func departures(siteID: String) -> Endpoint<DeparturesResponseDTO> {
+        Endpoint(
+            baseURL: baseURL,
+            path: "sites/\(siteID)/departures",
+            queryItems: [URLQueryItem(name: "forecast", value: "60")],
+            // Real-time data must always be fresh, so the cache is never used.
+            cachePolicy: .reloadIgnoringLocalCacheData
+        )
+    }
 }

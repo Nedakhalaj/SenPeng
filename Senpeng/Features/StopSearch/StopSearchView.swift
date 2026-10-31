@@ -29,7 +29,9 @@ struct StopSearchView: View {
         case .idle, .loading:
             ProgressView("Loading stops…")
         case .failed(let error):
-            errorView(error)
+            LoadErrorView(title: "Couldn't load stops", error: error) {
+                await viewModel.load()
+            }
         case .loaded(let sites):
             if viewModel.query.trimmingCharacters(in: .whitespaces).isEmpty {
                 ContentUnavailableView(
@@ -45,27 +47,15 @@ struct StopSearchView: View {
         }
     }
 
-    /// The list of matching stops.
+    /// The list of matching stops. Tapping a stop opens its departures.
     private func resultsList(_ sites: [Site]) -> some View {
         List(sites) { site in
-            SiteRow(site: site)
-                .listRowBackground(AppColor.surface)
+            NavigationLink(value: site) {
+                SiteRow(site: site)
+            }
+            .listRowBackground(AppColor.surface)
         }
         .scrollContentBackground(.hidden)
-    }
-
-    /// A calm error message with a button to try again.
-    private func errorView(_ error: UserFacingError) -> some View {
-        ContentUnavailableView {
-            Label("Couldn't load stops", systemImage: "wifi.exclamationmark")
-        } description: {
-            Text(error.message)
-        } actions: {
-            Button("Try again") {
-                Task { await viewModel.load() }
-            }
-            .primaryButtonStyle()
-        }
     }
 }
 
