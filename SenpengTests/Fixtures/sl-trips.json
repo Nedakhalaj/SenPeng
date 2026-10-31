@@ -1,0 +1,70 @@
+{
+  "journeys": [
+    {
+      "legs": [
+        {
+          "origin": {
+            "name": "Slussen, Stockholm",
+            "departureTimePlanned": "2026-10-31T13:59:24Z",
+            "departureTimeEstimated": "2026-10-31T13:59:24Z"
+          },
+          "destination": {
+            "name": "T-Centralen, Stockholm",
+            "arrivalTimePlanned": "2026-10-31T14:02:36Z",
+            "arrivalTimeEstimated": "2026-10-31T14:02:36Z"
+          },
+          "transportation": {
+            "disassembledName": "14",
+            "destination": {
+              "name": "Mörby centrum"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "legs": [
+        {
+          "origin": {
+            "name": "Slussen, Stockholm",
+            "departureTimePlanned": "2026-10-31T14:01:48Z",
+            "departureTimeEstimated": "2026-10-31T14:01:48Z"
+          },
+          "destination": {
+            "name": "T-Centralen, Stockholm",
+            "arrivalTimePlanned": "2026-10-31T14:05:00Z",
+            "arrivalTimeEstimated": "2026-10-31T14:05:00Z"
+          },
+          "transportation": {
+            "disassembledName": "18",
+            "destination": {
+              "name": "Vällingby"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "legs": [
+        {
+          "origin": {
+            "name": "Slussen, Stockholm",
+            "departureTimePlanned": "2026-10-31T14:02:54Z",
+            "departureTimeEstimated": "2026-10-31T14:02:54Z"
+          },
+          "destination": {
+            "name": "T-Centralen, Stockholm",
+            "arrivalTimePlanned": "2026-10-31T14:06:06Z",
+            "arrivalTimeEstimated": "2026-10-31T14:06:06Z"
+          },
+          "transportation": {
+            "disassembledName": "14",
+            "destination": {
+              "name": "Mörby centrum"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

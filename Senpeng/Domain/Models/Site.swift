@@ -18,6 +18,9 @@ struct Site: Identifiable, Equatable, Hashable, Sendable {
     /// Other names the stop is known by, for example "Höganäs brygga".
     let aliases: [String]
 
+    /// SL's global stop ID, used by the journey planner, for example "9091001000009192".
+    let globalID: String
+
     /// The stop as saved in a trip.
     var transportStop: TransportStop {
         TransportStop(id: id, name: name)

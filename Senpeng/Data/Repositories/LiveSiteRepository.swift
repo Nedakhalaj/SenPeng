@@ -38,7 +38,9 @@ actor LiveSiteRepository: SiteRepository {
     ///   - now: Returns the current time.
     init(
         apiClient: any APIClient,
-        cacheURL: URL = .cachesDirectory.appending(path: "sl-sites.json"),
+        // "v2" since the global ID was added: copies saved without it are ignored
+        // and downloaded again instead of failing to read.
+        cacheURL: URL = .cachesDirectory.appending(path: "sl-sites-v2.json"),
         maxCacheAge: TimeInterval = 7 * 24 * 60 * 60,
         now: @escaping @Sendable () -> Date = { Date() }
     ) {

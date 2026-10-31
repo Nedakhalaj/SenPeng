@@ -9,6 +9,9 @@ struct SiteDTO: Codable, Equatable, Sendable {
     /// SL's site ID, for example 9192 for Slussen.
     let id: Int
 
+    /// SL's global stop ID, for example 9091001000009192 for Slussen.
+    let gid: Int
+
     /// The stop's name.
     let name: String
 
@@ -27,6 +30,6 @@ struct SiteDTO: Codable, Equatable, Sendable {
     /// Converts the DTO to the app's own model.
     /// - Returns: The stop.
     func toSite() -> Site {
-        Site(id: String(id), name: name, area: note, aliases: alias ?? [])
+        Site(id: String(id), name: name, area: note, aliases: alias ?? [], globalID: String(gid))
     }
 }

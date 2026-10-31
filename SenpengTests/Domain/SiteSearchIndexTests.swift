@@ -7,13 +7,13 @@ import Testing
 struct SiteSearchIndexTests {
 
     private let index = SiteSearchIndex(sites: [
-        Site(id: "9192", name: "Slussen", area: nil, aliases: []),
-        Site(id: "9195", name: "Slussen/Södermalmstorg", area: nil, aliases: []),
-        Site(id: "9194", name: "Slussen/Stadsgården", area: nil, aliases: []),
-        Site(id: "9206", name: "Östermalmstorg", area: nil, aliases: []),
-        Site(id: "9001", name: "T-Centralen", area: nil, aliases: []),
-        Site(id: "408", name: "Höganäs", area: "Tynningö", aliases: ["Höganäs brygga"]),
-        Site(id: "9999", name: "Stora Mossen", area: nil, aliases: [])
+        Site(id: "9192", name: "Slussen", area: nil, aliases: [], globalID: "9091001000009192"),
+        Site(id: "9195", name: "Slussen/Södermalmstorg", area: nil, aliases: [], globalID: "9091001000009195"),
+        Site(id: "9194", name: "Slussen/Stadsgården", area: nil, aliases: [], globalID: "9091001000009194"),
+        Site(id: "9206", name: "Östermalmstorg", area: nil, aliases: [], globalID: "9091001000009206"),
+        Site(id: "9001", name: "T-Centralen", area: nil, aliases: [], globalID: "9091001000009001"),
+        Site(id: "408", name: "Höganäs", area: "Tynningö", aliases: ["Höganäs brygga"], globalID: "9091001000000408"),
+        Site(id: "9999", name: "Stora Mossen", area: nil, aliases: [], globalID: "9091001000009999")
     ])
 
     @Test("An empty or blank query finds nothing", arguments: ["", "   "])
