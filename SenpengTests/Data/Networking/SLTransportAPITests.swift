@@ -12,4 +12,12 @@ struct SLTransportAPITests {
 
         #expect(request.url?.absoluteString == "https://transport.integration.sl.se/v1/sites?expand=false")
     }
+
+    @Test("The departures request asks for the next hour and never uses the cache")
+    func departuresRequest() {
+        let request = SLTransportAPI.departures(siteID: "9192").makeRequest()
+
+        #expect(request.url?.absoluteString == "https://transport.integration.sl.se/v1/sites/9192/departures?forecast=60")
+        #expect(request.cachePolicy == .reloadIgnoringLocalCacheData)
+    }
 }

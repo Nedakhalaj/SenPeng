@@ -14,6 +14,9 @@ struct RootView: View {
             NavigationStack {
                 StopSearchView(repository: container.siteRepository)
                     .navigationTitle("Now")
+                    .navigationDestination(for: Site.self) { site in
+                        DeparturesView(site: site, repository: container.departureRepository)
+                    }
             }
             .tabItem { Label("Now", systemImage: "tram.fill") }
 
