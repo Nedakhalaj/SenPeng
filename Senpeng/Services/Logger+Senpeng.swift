@@ -8,4 +8,7 @@ extension Logger {
 
     /// Logs from network requests.
     static let networking = Logger(subsystem: subsystem, category: "Networking")
+
+    /// Logs from the on-device database.
+    static let persistence = Logger(subsystem: subsystem, category: "Persistence")
 }
