@@ -2,13 +2,16 @@ import SwiftUI
 
 /// The entry point of the Senpeng app.
 ///
-/// Creates the main window and shows the root navigation.
+/// Creates the app's building blocks once, then the main window with the root navigation.
 @main
 struct SenpengApp: App {
 
+    /// The app's real network and storage, shared by all screens.
+    private let container = AppContainer.live()
+
     var body: some Scene {
         WindowGroup {
-            RootView()
+            RootView(container: container)
         }
     }
 }
