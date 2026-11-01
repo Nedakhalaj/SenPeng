@@ -2,7 +2,7 @@ import SwiftUI
 
 /// The top-level navigation of the app: three tabs, as defined in the design rules.
 ///
-/// Each tab shows a placeholder until its feature is built. The system `TabView`
+/// Settings shows a placeholder until its feature is built. The system `TabView`
 /// gets Liquid Glass automatically on iOS 26 and later. While the user is on a trip,
 /// a small glass bar above the tabs shows it, on every tab.
 struct RootView: View {
@@ -15,6 +15,9 @@ struct RootView: View {
 
     /// Whether the current trip's details are showing.
     @State private var isShowingTrip = false
+
+    /// The tab being shown.
+    @State private var selectedTab = AppTab.now
 
     /// Whether the app is active, so live updates stop in the background.
     @Environment(\.scenePhase) private var scenePhase
@@ -44,9 +47,16 @@ struct RootView: View {
             }
     }
 
+    /// The app's tabs.
+    private enum AppTab {
+        case now
+        case myTrips
+        case settings
+    }
+
     /// The three tabs.
     private var tabs: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             NavigationStack {
                 StopSearchView(repository: container.siteRepository)
                     .navigationTitle("Now")
@@ -66,13 +76,24 @@ struct RootView: View {
             }
             .safeAreaInset(edge: .bottom) { tripBar }
             .tabItem { Label("Now", systemImage: "tram.fill") }
+            .tag(AppTab.now)
 
             NavigationStack {
-                ComingSoonView()
-                    .navigationTitle("My trips")
+                TripHistoryView(
+                    repository: container.tripRepository,
+                    refreshToken: activeTrip.status.changeToken,
+                    onTripRemoved: {
+                        Task { await activeTrip.refresh() }
+                    },
+                    onFindStop: {
+                        selectedTab = .now
+                    }
+                )
+                .navigationTitle("My trips")
             }
             .safeAreaInset(edge: .bottom) { tripBar }
             .tabItem { Label("My trips", systemImage: "list.bullet.rectangle") }
+            .tag(AppTab.myTrips)
 
             NavigationStack {
                 ComingSoonView()
@@ -80,6 +101,7 @@ struct RootView: View {
             }
             .safeAreaInset(edge: .bottom) { tripBar }
             .tabItem { Label("Settings", systemImage: "gearshape") }
+            .tag(AppTab.settings)
         }
     }
 

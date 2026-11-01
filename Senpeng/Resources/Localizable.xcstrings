@@ -1,12 +1,32 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%lld days left" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld dagar kvar"
+          }
+        }
+      }
+    },
     "%lld min late" : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld min sen"
+          }
+        }
+      }
+    },
+    "1 day left" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 dag kvar"
           }
         }
       }
@@ -91,6 +111,36 @@
         }
       }
     },
+    "Claim soon" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ansök snart"
+          }
+        }
+      }
+    },
+    "Claim submitted" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ansökan skickad"
+          }
+        }
+      }
+    },
+    "Claim time has passed" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiden för att ansöka har gått ut"
+          }
+        }
+      }
+    },
     "Coming soon" : {
       "localizations" : {
         "sv" : {
@@ -141,12 +191,52 @@
         }
       }
     },
+    "Couldn't load your trips" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunde inte ladda dina resor"
+          }
+        }
+      }
+    },
+    "Delay unknown" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okänd försening"
+          }
+        }
+      }
+    },
+    "Departs %@" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avgår %@"
+          }
+        }
+      }
+    },
     "Done" : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Klar"
+          }
+        }
+      }
+    },
+    "Entered by you" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Angiven av dig"
           }
         }
       }
@@ -171,6 +261,16 @@
         }
       }
     },
+    "Find a stop" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hitta hållplats"
+          }
+        }
+      }
+    },
     "Find your stop" : {
       "localizations" : {
         "sv" : {
@@ -181,12 +281,32 @@
         }
       }
     },
+    "From historical data" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Från historiska data"
+          }
+        }
+      }
+    },
     "I'm on this train" : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jag åker med den här"
+          }
+        }
+      }
+    },
+    "Last day today" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sista dagen idag"
           }
         }
       }
@@ -207,6 +327,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Laddar hållplatser…"
+          }
+        }
+      }
+    },
+    "Measured with live data" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uppmätt med realtidsdata"
           }
         }
       }
@@ -251,6 +381,16 @@
         }
       }
     },
+    "No live data was saved for this trip, so the delay is unknown." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inga realtidsdata sparades för den här resan, så förseningen är okänd."
+          }
+        }
+      }
+    },
     "No live data yet" : {
       "localizations" : {
         "sv" : {
@@ -261,12 +401,32 @@
         }
       }
     },
+    "No trips yet" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inga resor än"
+          }
+        }
+      }
+    },
     "Now" : {
       "localizations" : {
         "sv" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nu"
+          }
+        }
+      }
+    },
+    "On the way" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "På väg"
           }
         }
       }
@@ -297,6 +457,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eller, för taxi, egen bil eller annat trafikbolag: upp till %@ mot kvitto."
+          }
+        }
+      }
+    },
+    "Other trips" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andra resor"
+          }
+        }
+      }
+    },
+    "Planned arrival %@" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planerad ankomst %@"
           }
         }
       }
@@ -427,6 +607,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Reseinformationen är inte tillgänglig just nu. Försök igen om en stund."
+          }
+        }
+      }
+    },
+    "Trips you save appear here." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Resor du sparar visas här."
           }
         }
       }

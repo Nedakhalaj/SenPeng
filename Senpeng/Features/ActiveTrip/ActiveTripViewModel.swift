@@ -23,6 +23,16 @@ final class ActiveTripViewModel {
 
         /// The vehicle has arrived and the real arrival is saved.
         case arrived(Trip)
+
+        /// Changes when the trip or its stage changes, but not on every live update,
+        /// so other screens know when to reload.
+        var changeToken: String {
+            switch self {
+            case .none: "none"
+            case .following(let trip, _): "following-\(trip.id)"
+            case .arrived(let trip): "arrived-\(trip.id)"
+            }
+        }
     }
 
     /// What the app knows about the user's current trip.
