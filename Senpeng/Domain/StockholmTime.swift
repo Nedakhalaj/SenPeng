@@ -13,6 +13,13 @@ enum StockholmTime {
     /// is never used in practice; it only avoids a force unwrap.
     static let timeZone = TimeZone(identifier: "Europe/Stockholm") ?? .current
 
+    /// A Gregorian calendar in Stockholm time, for date math such as claim deadlines.
+    static let calendar: Calendar = {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        return calendar
+    }()
+
     /// Reads SL's date-time format: year-month-day, "T", hours:minutes:seconds, no time zone.
     private static let slFormat = Date.ISO8601FormatStyle(timeZone: timeZone)
         .year()

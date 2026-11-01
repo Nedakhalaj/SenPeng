@@ -34,6 +34,9 @@ final class ActiveTripViewModel {
     /// Finds the live arrival time.
     private let arrivalRepository: any ArrivalRepository
 
+    /// Decides whether a trip may qualify for delay money.
+    private let eligibilityChecker = EligibilityChecker()
+
     /// How long to wait between automatic updates.
     private let refreshInterval: Duration
 
@@ -57,6 +60,13 @@ final class ActiveTripViewModel {
         self.arrivalRepository = arrivalRepository
         self.refreshInterval = refreshInterval
         self.now = now
+    }
+
+    /// Whether a trip may qualify for delay money, right now.
+    /// - Parameter trip: The trip to judge.
+    /// - Returns: The result, based on the rules valid on the trip's date.
+    func eligibility(for trip: Trip) -> EligibilityResult {
+        eligibilityChecker.eligibility(for: trip, now: now())
     }
 
     /// Updates the trip now, then again every `refreshInterval`, until cancelled.

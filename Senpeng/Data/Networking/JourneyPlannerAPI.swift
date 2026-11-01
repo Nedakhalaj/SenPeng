@@ -12,13 +12,6 @@ enum JourneyPlannerAPI {
     /// at runtime, and `JourneyPlannerAPITests` checks it on every CI run.
     static let baseURL = URL(string: "https://journeyplanner.integration.sl.se/v2")!
 
-    /// A Gregorian calendar in Stockholm time, to write the date and time the planner expects.
-    private static let calendar: Calendar = {
-        var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = StockholmTime.timeZone
-        return calendar
-    }()
-
     /// Direct trips (no transfers) between two stops, leaving at or after a time.
     ///
     /// Each trip has the planned and live expected departure and arrival, also at
@@ -34,7 +27,7 @@ enum JourneyPlannerAPI {
         to destinationGlobalID: String,
         departingAt date: Date
     ) -> Endpoint<TripsResponseDTO> {
-        let parts = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        let parts = StockholmTime.calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         let day = String(format: "%04ld%02ld%02ld", parts.year ?? 0, parts.month ?? 0, parts.day ?? 0)
         let time = String(format: "%02ld%02ld", parts.hour ?? 0, parts.minute ?? 0)
 

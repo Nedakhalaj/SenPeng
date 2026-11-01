@@ -158,6 +158,19 @@ struct ActiveTripViewModelTests {
         #expect(viewModel.status == .none)
     }
 
+    @Test("A trip that arrived more than 20 minutes late may qualify; a smaller delay doesn't")
+    func eligibility() {
+        let viewModel = makeViewModel(trips: FakeTripRepository())
+        let veryLate = TripFactory.make(arrivalDelay: 25 * 60)
+        let slightlyLate = TripFactory.make(arrivalDelay: 5 * 60)
+
+        guard case .eligible = viewModel.eligibility(for: veryLate) else {
+            Issue.record("Expected the trip to be eligible")
+            return
+        }
+        #expect(viewModel.eligibility(for: slightlyLate) == .delayTooShort)
+    }
+
     /// Creates a view model with fake repositories and the test clock.
     private func makeViewModel(
         trips: FakeTripRepository,

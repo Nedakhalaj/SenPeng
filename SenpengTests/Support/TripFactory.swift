@@ -13,16 +13,18 @@ enum TripFactory {
     ///   - departureOffset: Seconds after `referenceDate` the trip departs.
     ///   - arrivalDelay: How late it arrived, in seconds, or `nil` if unknown.
     ///   - claimStatus: Whether a claim was submitted.
+    ///   - scheduledArrival: The planned arrival, if a test needs a specific date.
     /// - Returns: The trip.
     static func make(
         id: UUID = UUID(),
         departureOffset: TimeInterval = 0,
         arrivalDelay: TimeInterval? = nil,
-        claimStatus: ClaimStatus = .notSubmitted
+        claimStatus: ClaimStatus = .notSubmitted,
+        scheduledArrival: Date? = nil
     ) -> Trip {
         let departure = referenceDate.addingTimeInterval(departureOffset)
         // The scheduled ride from Slussen to T-Centralen takes 3 minutes.
-        let arrival = departure.addingTimeInterval(3 * 60)
+        let arrival = scheduledArrival ?? departure.addingTimeInterval(3 * 60)
         return Trip(
             id: id,
             line: "14",
