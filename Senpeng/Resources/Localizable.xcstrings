@@ -291,6 +291,16 @@
         }
       }
     },
+    "Or, for a taxi, your own car or another operator: up to %@ with a receipt." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eller, för taxi, egen bil eller annat trafikbolag: upp till %@ mot kvitto."
+          }
+        }
+      }
+    },
     "Remove this trip?" : {
       "localizations" : {
         "sv" : {
@@ -437,6 +447,36 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Var kliver du av?"
+          }
+        }
+      }
+    },
+    "You apply yourself on sl.se, by %@." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du ansöker själv på sl.se, senast %@."
+          }
+        }
+      }
+    },
+    "You may get money back" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kan få pengar tillbaka"
+          }
+        }
+      }
+    },
+    "You may get part or all of your ticket price back." : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kan få tillbaka del av eller hela biljettpriset."
           }
         }
       }

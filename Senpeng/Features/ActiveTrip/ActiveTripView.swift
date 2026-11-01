@@ -95,6 +95,8 @@ struct ActiveTripView: View {
                 ActiveTripStatusBadge(minutesLate: trip.minutesLate)
             }
 
+            ClaimHint(eligibility: viewModel.eligibility(for: trip))
+
             Spacer()
 
             Button {
