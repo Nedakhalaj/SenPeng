@@ -30,6 +30,9 @@ enum StockholmTime {
     /// Shows a time of day, for example "12:33", in Stockholm time and the user's locale.
     static let clockTime = Date.FormatStyle(date: .omitted, time: .shortened, timeZone: timeZone)
 
+    /// Shows a date and time, for example "31 Oct 2026, 12:33", in Stockholm time and the user's locale.
+    static let dateAndTime = Date.FormatStyle(date: .abbreviated, time: .shortened, timeZone: timeZone)
+
     /// Reads a date-time from SL's API.
     /// - Parameter text: The time as SL sends it, for example `2026-10-31T12:30:00`.
     /// - Returns: The moment in time, or `nil` if the text isn't in SL's format.
