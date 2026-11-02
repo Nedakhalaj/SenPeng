@@ -11,6 +11,16 @@
         }
       }
     },
+    "%lld days left to apply on sl.se: %@ → %@" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld dagar kvar att ansöka på sl.se: %@ → %@"
+          }
+        }
+      }
+    },
     "%lld min late" : {
       "localizations" : {
         "sv" : {
