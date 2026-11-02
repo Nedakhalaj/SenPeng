@@ -12,6 +12,10 @@ struct SettingsView: View {
     /// Trafiklab's website, credited as the data source as their terms require.
     private let trafiklabURL = URL(string: "https://www.trafiklab.se")
 
+    /// The privacy policy, which Apple requires to be easy to find inside the app (guideline 5.1.1).
+    /// Published from `docs/privacy-policy.html`.
+    private let privacyPolicyURL = URL(string: "https://nedakhalaj.github.io/senpeng-privacy/")
+
     /// This app's page in iOS Settings, where notifications and language are chosen.
     private let systemSettingsURL = URL(string: UIApplication.openSettingsURLString)
 
@@ -80,13 +84,18 @@ struct SettingsView: View {
         }
     }
 
-    /// The disclaimer, the data source credit and the version.
+    /// The disclaimer, the privacy policy, the data source credit and the version.
     private var aboutSection: some View {
         Section {
             Text("Not affiliated with SL / Region Stockholm. Claims are submitted by you on sl.se.")
                 .font(.subheadline)
                 .foregroundStyle(AppColor.textSecondary)
                 .listRowBackground(AppColor.surface)
+
+            if let privacyPolicyURL {
+                Link("Privacy policy", destination: privacyPolicyURL)
+                    .listRowBackground(AppColor.surface)
+            }
 
             if let trafiklabURL {
                 Link("Travel data from Trafiklab", destination: trafiklabURL)
