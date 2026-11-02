@@ -90,7 +90,7 @@ struct StartTripView: View {
                 ContentUnavailableView(
                     "Where do you get off?",
                     systemImage: "mappin.and.ellipse",
-                    description: Text("Search for the stop where you get off.")
+                    description: Text("Search for the stop where you get off.").foregroundStyle(AppColor.textSecondary)
                 )
             } else if sites.isEmpty {
                 ContentUnavailableView.search(text: viewModel.query)
@@ -110,23 +110,33 @@ struct StartTripView: View {
 
     /// The trip summary with the main button.
     private func confirmation(destination: Site, arrival: ArrivalEstimate) -> some View {
-        VStack(spacing: Spacing.m) {
-            TripSummaryCard(
-                departure: viewModel.departure,
-                origin: viewModel.origin,
-                destination: destination,
-                arrival: arrival
-            )
+        ScrollView {
+            VStack(spacing: Spacing.m) {
+                TripSummaryCard(
+                    departure: viewModel.departure,
+                    origin: viewModel.origin,
+                    destination: destination,
+                    arrival: arrival
+                )
 
-            if let error = viewModel.saveError {
-                Text(error.message)
-                    .font(.subheadline)
-                    .foregroundStyle(AppColor.textSecondary)
+                if let error = viewModel.saveError {
+                    Text(error.message)
+                        .font(.subheadline)
+                        .foregroundStyle(AppColor.textSecondary)
+                }
             }
+            .padding(Spacing.l)
+        }
+        // The main action stays at the bottom, within thumb reach. The card above
+        // scrolls, so nothing is cut off at the largest text sizes.
+        .safeAreaInset(edge: .bottom) {
+            confirmationButtons
+        }
+    }
 
-            // The main action stays at the bottom, within thumb reach.
-            Spacer()
-
+    /// The main button and the way back.
+    private var confirmationButtons: some View {
+        VStack(spacing: Spacing.m) {
             Button {
                 Task { await viewModel.startTrip() }
             } label: {
@@ -152,6 +162,7 @@ struct StartTripView: View {
             Label("Couldn't check the arrival time", systemImage: "exclamationmark.triangle")
         } description: {
             Text(error.message)
+                .foregroundStyle(AppColor.textSecondary)
         } actions: {
             Button("Change stop") {
                 viewModel.changeDestination()
@@ -169,6 +180,7 @@ struct StartTripView: View {
     }
 }
 
+#if DEBUG
 #Preview("Search") {
     StartTripView(viewModel: StartTripViewModel(
         departure: PreviewDepartureRepository.sampleDepartures()[0],
@@ -178,3 +190,4 @@ struct StartTripView: View {
         tripRepository: PreviewTripRepository()
     ))
 }
+#endif

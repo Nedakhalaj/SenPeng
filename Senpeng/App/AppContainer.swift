@@ -83,5 +83,42 @@ final class AppContainer {
             notifications: PreviewNotificationService()
         )
     }
+
+    /// A container for UI tests: fake travel data, no requests to SL, and an empty
+    /// database in memory, with two finished trips: one late, one with an unknown delay.
+    static var uiTesting: AppContainer {
+        let trips: any TripRepository
+        do {
+            trips = LiveTripRepository(modelContainer: try ModelContainer.makeSenpengContainer(inMemory: true))
+        } catch {
+            trips = UnavailableTripRepository()
+        }
+        Task {
+            let day: TimeInterval = 24 * 60 * 60
+            var lateTrip = PreviewTripRepository.sampleTrip(from: Date().addingTimeInterval(-day))
+            lateTrip.actualArrival = lateTrip.scheduledArrival.addingTimeInterval(25 * 60)
+            lateTrip.delaySource = .live
+            try? await trips.save(lateTrip)
+            try? await trips.save(PreviewTripRepository.sampleTrip(from: Date().addingTimeInterval(-2 * day)))
+        }
+        return AppContainer(
+            siteRepository: PreviewSiteRepository(),
+            departureRepository: PreviewDepartureRepository(),
+            arrivalRepository: PreviewArrivalRepository(),
+            tripRepository: trips,
+            notifications: PreviewNotificationService()
+        )
+    }
     #endif
+
+    /// Creates the container for this launch of the app.
+    /// - Returns: The live container. In debug builds, UI tests can ask for fake data.
+    static func forCurrentLaunch() -> AppContainer {
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-useFakeData") {
+            return uiTesting
+        }
+        #endif
+        return live()
+    }
 }

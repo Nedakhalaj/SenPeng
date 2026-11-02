@@ -24,6 +24,10 @@ enum AppColor {
     /// Main buttons, links and selected states. Use sparingly.
     static let accent = Color(ColorAsset.accent)
 
+    /// Text on the accent color, for example on the main button. It's light on the dark
+    /// accent in light mode, and dark on the light accent in dark mode, so it stays readable.
+    static let onAccent = Color(ColorAsset.onAccent)
+
     /// Positive status, for example "You may get money back".
     static let success = Color(ColorAsset.success)
 

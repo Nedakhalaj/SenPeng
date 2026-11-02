@@ -31,9 +31,11 @@ struct SiteRow: View {
     }
 }
 
+#if DEBUG
 #Preview {
     List {
         SiteRow(site: PreviewSiteRepository.sampleSites[0])
         SiteRow(site: PreviewSiteRepository.sampleSites[5])
     }
 }
+#endif

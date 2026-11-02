@@ -68,6 +68,7 @@ struct TripHistoryView: View {
             Label("No trips yet", systemImage: "tram")
         } description: {
             Text("Trips you save appear here.")
+                .foregroundStyle(AppColor.textSecondary)
         } actions: {
             Button("Find a stop", action: onFindStop)
                 .primaryButtonStyle()
@@ -78,7 +79,7 @@ struct TripHistoryView: View {
     private func list(_ history: TripHistory) -> some View {
         List {
             if !history.claimSoon.isEmpty {
-                Section("Claim soon") {
+                Section {
                     ForEach(history.claimSoon) { item in
                         navigationLink(for: item)
                             .padding(.horizontal, Spacing.l)
@@ -94,14 +95,20 @@ struct TripHistoryView: View {
                             .listRowBackground(Color.clear)
                             .listRowSeparator(.hidden)
                     }
+                } header: {
+                    Text("Claim soon")
+                        .foregroundStyle(AppColor.textSecondary)
                 }
             }
             if !history.otherTrips.isEmpty {
-                Section("Other trips") {
+                Section {
                     ForEach(history.otherTrips) { item in
                         navigationLink(for: item)
                             .listRowBackground(AppColor.surface)
                     }
+                } header: {
+                    Text("Other trips")
+                        .foregroundStyle(AppColor.textSecondary)
                 }
             }
         }
@@ -134,6 +141,7 @@ struct TripHistoryView: View {
     }
 }
 
+#if DEBUG
 #Preview("Trips") {
     let trips = [
         PreviewTripRepository.sampleTrip(),
@@ -162,3 +170,4 @@ struct TripHistoryView: View {
     }
     .preferredColorScheme(.dark)
 }
+#endif

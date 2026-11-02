@@ -24,6 +24,8 @@ struct LineBadge: View {
         .padding(.vertical, Spacing.xs)
         .padding(.horizontal, Spacing.s)
         .background(AppColor.separator, in: .rect(cornerRadius: Radius.control))
+        // A line number must never split over two lines, also at the largest text sizes.
+        .fixedSize()
     }
 }
 

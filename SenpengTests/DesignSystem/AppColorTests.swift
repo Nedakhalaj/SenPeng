@@ -28,6 +28,15 @@ struct AppColorTests {
         }
     }
 
+    /// The main button's text must be readable on the accent color, in both modes.
+    @Test("Text on the main button is readable")
+    func onAccentIsReadable() throws {
+        for style in Self.appearances {
+            let ratio = try contrastRatio(.onAccent, .accent, style: style)
+            #expect(ratio >= 4.5, "On accent in \(style == .dark ? "dark" : "light") mode: \(ratio)")
+        }
+    }
+
     /// Status icons need a contrast of at least 3:1 (WCAG AA for graphics).
     @Test(
         "Status color is visible on the background",

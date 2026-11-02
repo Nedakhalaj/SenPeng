@@ -38,6 +38,8 @@ struct StatusBadge: View {
         .padding(.horizontal, Spacing.s)
         // A light tint keeps the badge calm; the icon and text carry the meaning.
         .background(style.color.opacity(0.15), in: .capsule)
+        // Wraps instead of being cut off at the largest text sizes.
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 

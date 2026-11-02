@@ -6,8 +6,8 @@ import SwiftUI
 @main
 struct SenpengApp: App {
 
-    /// The app's real network and storage, shared by all screens.
-    private let container = AppContainer.live()
+    /// The app's network and storage, shared by all screens.
+    private let container = AppContainer.forCurrentLaunch()
 
     var body: some Scene {
         WindowGroup {

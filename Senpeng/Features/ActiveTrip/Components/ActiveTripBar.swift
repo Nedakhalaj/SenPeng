@@ -29,10 +29,14 @@ struct ActiveTripBar: View {
         }
         .buttonStyle(.plain)
         .glassCard(interactive: true)
+        // A compact bar, like the tab bar. It stops growing at this size, so it doesn't
+        // cover the screen; the sheet it opens shows everything at the full text size.
+        .dynamicTypeSize(...DynamicTypeSize.xxLarge)
         .accessibilityHint(Text("Show your trip"))
     }
 }
 
+#if DEBUG
 #Preview {
     ActiveTripBar(
         trip: PreviewTripRepository.sampleTrip(),
@@ -42,3 +46,4 @@ struct ActiveTripBar: View {
     .padding(Spacing.l)
     .appBackground()
 }
+#endif

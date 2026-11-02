@@ -1,13 +1,26 @@
 import SwiftUI
 
 /// One departure: line badge, destination, time, and a badge when it's late or cancelled.
+///
+/// At the largest text sizes the parts stack vertically, because side by side
+/// there's no room and words would break apart.
 struct DepartureRow: View {
 
     /// The departure to show.
     let departure: Departure
 
+    /// The user's text size.
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    /// Side by side normally, stacked at the largest text sizes.
+    private var layout: AnyLayout {
+        dynamicTypeSize.isAccessibilitySize
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: Spacing.s))
+            : AnyLayout(HStackLayout(spacing: Spacing.m))
+    }
+
     var body: some View {
-        HStack(spacing: Spacing.m) {
+        layout {
             LineBadge(line: departure.line, mode: departure.transportMode)
 
             VStack(alignment: .leading, spacing: Spacing.xs) {
@@ -41,8 +54,17 @@ struct DepartureRow: View {
     }
 }
 
+#if DEBUG
 #Preview {
     List(PreviewDepartureRepository.sampleDepartures()) { departure in
         DepartureRow(departure: departure)
     }
 }
+
+#Preview("Largest text") {
+    List(PreviewDepartureRepository.sampleDepartures()) { departure in
+        DepartureRow(departure: departure)
+    }
+    .dynamicTypeSize(.accessibility5)
+}
+#endif

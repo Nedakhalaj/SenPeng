@@ -37,7 +37,7 @@ struct StopSearchView: View {
                 ContentUnavailableView(
                     "Find your stop",
                     systemImage: "magnifyingglass",
-                    description: Text("Search for the stop where you get on.")
+                    description: Text("Search for the stop where you get on.").foregroundStyle(AppColor.textSecondary)
                 )
             } else if sites.isEmpty {
                 ContentUnavailableView.search(text: viewModel.query)
@@ -59,6 +59,7 @@ struct StopSearchView: View {
     }
 }
 
+#if DEBUG
 #Preview("Stops") {
     NavigationStack {
         StopSearchView(repository: PreviewSiteRepository())
@@ -73,3 +74,4 @@ struct StopSearchView: View {
     }
     .preferredColorScheme(.dark)
 }
+#endif
