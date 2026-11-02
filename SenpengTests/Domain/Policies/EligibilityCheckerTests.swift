@@ -118,6 +118,8 @@ struct EligibilityCheckerTests {
         let rules = try #require(CompensationPolicy.ruleSets.first)
 
         #expect(CompensationPolicy.ruleSets.count == 1)
+        #expect(CompensationPolicy.minimumDelayMinutes() == 20)
+        #expect(CompensationPolicy.claimWindowMonths() == 3)
         #expect(rules.minimumDelay == .seconds(20 * 60))
         #expect(rules.claimWindowMonths == 3)
         #expect(rules.alternativeTravelCap == 1_480)

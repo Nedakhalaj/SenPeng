@@ -43,10 +43,10 @@ struct StatusBadge: View {
 
 #Preview("Light") {
     VStack(alignment: .leading, spacing: Spacing.s) {
-        StatusBadge("Coming soon", style: .success)
-        StatusBadge("Coming soon", style: .warning)
-        StatusBadge("Coming soon", style: .danger)
-        StatusBadge("Coming soon", style: .neutral)
+        StatusBadge("On time", style: .success)
+        StatusBadge("On time", style: .warning)
+        StatusBadge("On time", style: .danger)
+        StatusBadge("On time", style: .neutral)
     }
     .padding(Spacing.l)
     .appBackground()
@@ -54,10 +54,10 @@ struct StatusBadge: View {
 
 #Preview("Dark") {
     VStack(alignment: .leading, spacing: Spacing.s) {
-        StatusBadge("Coming soon", style: .success)
-        StatusBadge("Coming soon", style: .warning)
-        StatusBadge("Coming soon", style: .danger)
-        StatusBadge("Coming soon", style: .neutral)
+        StatusBadge("On time", style: .success)
+        StatusBadge("On time", style: .warning)
+        StatusBadge("On time", style: .danger)
+        StatusBadge("On time", style: .neutral)
     }
     .padding(Spacing.l)
     .appBackground()

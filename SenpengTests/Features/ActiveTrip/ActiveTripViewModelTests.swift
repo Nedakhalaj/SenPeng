@@ -158,6 +158,20 @@ struct ActiveTripViewModelTests {
         #expect(viewModel.status == .none)
     }
 
+    @Test("An arrived trip that was deleted elsewhere leaves the screen right away")
+    func arrivedTripDeletedElsewhere() async throws {
+        let trips = FakeTripRepository(trips: [trip])
+        let estimate = ArrivalEstimate(scheduled: scheduledArrival, expected: scheduledArrival)
+        clock.set(scheduledArrival)
+        let viewModel = makeViewModel(trips: trips, arrivals: FakeArrivalRepository(result: .success(estimate)))
+        await viewModel.refresh()
+
+        try await trips.deleteAll()
+        await viewModel.refresh()
+
+        #expect(viewModel.status == .none)
+    }
+
     @Test("A trip that arrived more than 20 minutes late may qualify; a smaller delay doesn't")
     func eligibility() {
         let viewModel = makeViewModel(trips: FakeTripRepository())
