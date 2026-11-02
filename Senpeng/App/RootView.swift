@@ -42,6 +42,13 @@ struct RootView: View {
                 }
                 await activeTrip.keepUpdated()
             }
+            // Brings the reminders up to date when the app opens and when a trip changes.
+            .task(id: "\(activeTrip.status.changeToken)-\(scenePhase)") {
+                guard scenePhase == .active else {
+                    return
+                }
+                await container.reminderSync.sync()
+            }
             .sheet(isPresented: $isShowingTrip) {
                 ActiveTripView(viewModel: activeTrip)
             }
@@ -69,7 +76,11 @@ struct RootView: View {
                                 arrivalRepository: container.arrivalRepository,
                                 tripRepository: container.tripRepository
                             )) {
-                                Task { await activeTrip.refresh() }
+                                Task {
+                                    await activeTrip.refresh()
+                                    // Asked here, when the reason for reminders is clear, not at launch.
+                                    await container.reminderSync.requestPermission()
+                                }
                             }
                         }
                     }
@@ -83,7 +94,10 @@ struct RootView: View {
                     repository: container.tripRepository,
                     refreshToken: activeTrip.status.changeToken,
                     onTripRemoved: {
-                        Task { await activeTrip.refresh() }
+                        Task {
+                            await activeTrip.refresh()
+                            await container.reminderSync.sync()
+                        }
                     },
                     onFindStop: {
                         selectedTab = .now

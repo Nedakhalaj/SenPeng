@@ -11,4 +11,7 @@ extension Logger {
 
     /// Logs from the on-device database.
     static let persistence = Logger(subsystem: subsystem, category: "Persistence")
+
+    /// Logs from planning reminders.
+    static let notifications = Logger(subsystem: subsystem, category: "Notifications")
 }

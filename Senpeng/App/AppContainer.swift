@@ -22,22 +22,28 @@ final class AppContainer {
     /// Saves and loads the user's trips.
     let tripRepository: any TripRepository
 
+    /// Keeps the planned deadline reminders in line with the saved trips.
+    let reminderSync: ClaimReminderSync
+
     /// Creates a container with the given building blocks.
     /// - Parameters:
     ///   - siteRepository: Provides SL's list of all stops.
     ///   - departureRepository: Provides the real-time departures from a stop.
     ///   - arrivalRepository: Finds when a departure arrives at the user's destination.
     ///   - tripRepository: Saves and loads the user's trips.
+    ///   - notifications: Shows the deadline reminders.
     init(
         siteRepository: any SiteRepository,
         departureRepository: any DepartureRepository,
         arrivalRepository: any ArrivalRepository,
-        tripRepository: any TripRepository
+        tripRepository: any TripRepository,
+        notifications: any NotificationService
     ) {
         self.siteRepository = siteRepository
         self.departureRepository = departureRepository
         self.arrivalRepository = arrivalRepository
         self.tripRepository = tripRepository
+        reminderSync = ClaimReminderSync(tripRepository: tripRepository, notifications: notifications)
     }
 
     /// Creates the container used by the real app.
@@ -49,7 +55,8 @@ final class AppContainer {
             siteRepository: LiveSiteRepository(apiClient: apiClient),
             departureRepository: LiveDepartureRepository(apiClient: apiClient),
             arrivalRepository: LiveArrivalRepository(apiClient: apiClient),
-            tripRepository: makeTripRepository()
+            tripRepository: makeTripRepository(),
+            notifications: LiveNotificationService()
         )
     }
 
@@ -72,7 +79,8 @@ final class AppContainer {
             siteRepository: PreviewSiteRepository(),
             departureRepository: PreviewDepartureRepository(),
             arrivalRepository: PreviewArrivalRepository(),
-            tripRepository: PreviewTripRepository()
+            tripRepository: PreviewTripRepository(),
+            notifications: PreviewNotificationService()
         )
     }
     #endif
