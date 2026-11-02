@@ -1,4 +1,5 @@
 import Foundation
+import os
 import Testing
 @testable import Senpeng
 
@@ -68,25 +69,79 @@ struct LiveAPIClientTests {
         }
     }
 
+    @Test("Too many requests becomes a rate limit error")
+    func rateLimited() async throws {
+        let (client, endpoint) = try makeClient { request in
+            (try Self.response(for: request, statusCode: 429), Data())
+        }
+
+        await #expect(throws: NetworkError.rateLimited) {
+            try await client.send(endpoint)
+        }
+    }
+
+    @Test("No request is sent until the server's Retry-After has passed")
+    func waitsForRetryAfter() async throws {
+        let clock = OSAllocatedUnfairLock(initialState: TripFactory.referenceDate)
+        let requests = OSAllocatedUnfairLock(initialState: 0)
+        let stopData = try Fixture.data(named: "sample-stop")
+        let (client, endpoint) = try makeClient(
+            rateLimitGate: RateLimitGate(now: { clock.withLock { $0 } })
+        ) { request in
+            let number = requests.withLock { count in
+                count += 1
+                return count
+            }
+            guard number > 1 else {
+                return (try Self.response(for: request, statusCode: 429, headers: ["Retry-After": "120"]), Data())
+            }
+            return (try Self.response(for: request, statusCode: 200), stopData)
+        }
+
+        await #expect(throws: NetworkError.rateLimited) {
+            try await client.send(endpoint)
+        }
+
+        // Still waiting: the client fails right away, without using the network.
+        clock.withLock { $0 = $0.addingTimeInterval(119) }
+        await #expect(throws: NetworkError.rateLimited) {
+            try await client.send(endpoint)
+        }
+        #expect(requests.withLock { $0 } == 1)
+
+        clock.withLock { $0 = $0.addingTimeInterval(1) }
+        let stop = try await client.send(endpoint)
+        #expect(stop == Stop(id: 9192, name: "Slussen"))
+        #expect(requests.withLock { $0 } == 2)
+    }
+
     /// Creates a client on a fake network with its own unique host.
-    /// - Parameter handler: Builds the fake answer for each request.
+    /// - Parameters:
+    ///   - rateLimitGate: Holds back requests after "too many requests".
+    ///   - handler: Builds the fake answer for each request.
     /// - Returns: The client and an endpoint that points at the fake host.
     private func makeClient(
+        rateLimitGate: RateLimitGate = RateLimitGate(),
         handler: @escaping MockURLProtocol.Handler
     ) throws -> (LiveAPIClient, Endpoint<Stop>) {
         let host = "test-\(UUID().uuidString).example"
         let session = MockURLProtocol.makeSession(host: host, handler: handler)
         let endpoint = Endpoint<Stop>(baseURL: try #require(URL(string: "https://\(host)")), path: "stop")
-        return (LiveAPIClient(session: session), endpoint)
+        return (LiveAPIClient(session: session, rateLimitGate: rateLimitGate), endpoint)
     }
 
     /// Creates an HTTP response for a request.
     /// - Parameters:
     ///   - request: The request being answered.
     ///   - statusCode: The HTTP status code.
+    ///   - headers: The response's headers.
     /// - Returns: The response.
-    private static func response(for request: URLRequest, statusCode: Int) throws -> HTTPURLResponse {
+    private static func response(
+        for request: URLRequest,
+        statusCode: Int,
+        headers: [String: String]? = nil
+    ) throws -> HTTPURLResponse {
         let url = try #require(request.url)
-        return try #require(HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: nil))
+        return try #require(HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: nil, headerFields: headers))
     }
 }

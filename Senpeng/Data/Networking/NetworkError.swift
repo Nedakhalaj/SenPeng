@@ -15,6 +15,9 @@ enum NetworkError: Error, Equatable {
     /// The server answered with an error status, for example 404 or 500.
     case server(statusCode: Int)
 
+    /// The server answered "too many requests", or the app is still waiting after such an answer.
+    case rateLimited
+
     /// The answer wasn't valid HTTP.
     case invalidResponse
 
@@ -58,7 +61,7 @@ enum NetworkError: Error, Equatable {
         switch self {
         case .offline:
             .offline
-        case .timeout, .server:
+        case .timeout, .server, .rateLimited:
             .serviceUnavailable
         case .invalidResponse, .decoding, .transport:
             .unexpected
