@@ -54,4 +54,15 @@ final class CoreFlowUITests: XCTestCase {
         robot.waitForButton("Next").tap()
         XCTAssertTrue(robot.waitForButton("Get started").isEnabled)
     }
+
+    /// Settings links to the privacy policy, as Apple requires.
+    @MainActor
+    func testSettingsLinksToThePrivacyPolicy() throws {
+        let robot = AppRobot()
+        robot.launch()
+
+        robot.openTab(2)
+        // Found by label only: iOS versions report a link as different element types.
+        XCTAssertTrue(robot.app.descendants(matching: .any)["Privacy policy"].waitForExistence(timeout: 15))
+    }
 }

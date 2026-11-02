@@ -611,6 +611,16 @@
         }
       }
     },
+    "Privacy policy" : {
+      "localizations" : {
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Integritetspolicy"
+          }
+        }
+      }
+    },
     "Remove this trip?" : {
       "localizations" : {
         "sv" : {
