@@ -2,9 +2,9 @@ import SwiftUI
 
 /// The top-level navigation of the app: three tabs, as defined in the design rules.
 ///
-/// Settings shows a placeholder until its feature is built. The system `TabView`
-/// gets Liquid Glass automatically on iOS 26 and later. While the user is on a trip,
-/// a small glass bar above the tabs shows it, on every tab.
+/// The system `TabView` gets Liquid Glass automatically on iOS 26 and later. While the
+/// user is on a trip, a small glass bar above the tabs shows it, on every tab.
+/// Onboarding covers everything the first time the app opens.
 struct RootView: View {
 
     /// The app's building blocks, passed on to each tab's screen.
@@ -18,6 +18,10 @@ struct RootView: View {
 
     /// The tab being shown.
     @State private var selectedTab = AppTab.now
+
+    /// Whether the user has seen onboarding. Saved in `UserDefaults`,
+    /// which is declared in the privacy manifest.
+    @AppStorage("hasSeenOnboarding") private var hasSeenOnboarding = false
 
     /// Whether the app is active, so live updates stop in the background.
     @Environment(\.scenePhase) private var scenePhase
@@ -51,6 +55,11 @@ struct RootView: View {
             }
             .sheet(isPresented: $isShowingTrip) {
                 ActiveTripView(viewModel: activeTrip)
+            }
+            .fullScreenCover(isPresented: .constant(!hasSeenOnboarding)) {
+                OnboardingView {
+                    hasSeenOnboarding = true
+                }
             }
     }
 
@@ -110,8 +119,14 @@ struct RootView: View {
             .tag(AppTab.myTrips)
 
             NavigationStack {
-                ComingSoonView()
-                    .navigationTitle("Settings")
+                SettingsView(viewModel: SettingsViewModel(
+                    tripRepository: container.tripRepository,
+                    onDataDeleted: {
+                        await activeTrip.refresh()
+                        await container.reminderSync.sync()
+                    }
+                ))
+                .navigationTitle("Settings")
             }
             .safeAreaInset(edge: .bottom) { tripBar }
             .tabItem { Label("Settings", systemImage: "gearshape") }
@@ -139,18 +154,6 @@ struct RootView: View {
         }
         .padding(.horizontal, Spacing.l)
         .padding(.bottom, Spacing.s)
-    }
-}
-
-/// Temporary content for tabs whose feature isn't built yet.
-private struct ComingSoonView: View {
-    var body: some View {
-        ContentUnavailableView(
-            "Coming soon",
-            systemImage: "hammer",
-            description: Text("This part of Senpeng is being built.")
-        )
-        .appBackground()
     }
 }
 

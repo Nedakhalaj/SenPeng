@@ -12,6 +12,8 @@ final class LaunchUITests: XCTestCase {
     @MainActor
     func testLaunchShowsThreeTabs() throws {
         let app = XCUIApplication()
+        // Skips onboarding, which would cover the tabs on a fresh install.
+        app.launchArguments = ["-hasSeenOnboarding", "YES"]
         app.launch()
 
         let tabBar = app.tabBars.firstMatch

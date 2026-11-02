@@ -96,8 +96,16 @@ final class ActiveTripViewModel {
 
     /// Finds the current trip and updates its live arrival once.
     func refresh() async {
-        // An arrived trip stays on screen until the user taps "Done".
-        if case .arrived = status {
+        // An arrived trip stays on screen until the user taps "Done",
+        // unless it was removed, for example from My trips or Settings.
+        if case .arrived(let arrivedTrip) = status {
+            do {
+                if try await tripRepository.trip(id: arrivedTrip.id) == nil {
+                    status = .none
+                }
+            } catch {
+                Logger.persistence.error("Checking the arrived trip failed")
+            }
             return
         }
 
