@@ -41,6 +41,7 @@ struct SettingsView: View {
             }
         } footer: {
             Text("Choose notifications and language for Senpeng in iOS Settings.")
+                .foregroundStyle(AppColor.textSecondary)
         }
     }
 
@@ -50,6 +51,7 @@ struct SettingsView: View {
             Button("Delete all data", role: .destructive) {
                 isConfirmingDeletion = true
             }
+            .foregroundStyle(AppColor.danger)
             .listRowBackground(AppColor.surface)
             .confirmationDialog(
                 "Delete all trips and reminders?",
@@ -74,12 +76,13 @@ struct SettingsView: View {
                     Text(error.message)
                 }
             }
+            .foregroundStyle(AppColor.textSecondary)
         }
     }
 
     /// The disclaimer, the data source credit and the version.
     private var aboutSection: some View {
-        Section("About") {
+        Section {
             Text("Not affiliated with SL / Region Stockholm. Claims are submitted by you on sl.se.")
                 .font(.subheadline)
                 .foregroundStyle(AppColor.textSecondary)
@@ -92,10 +95,14 @@ struct SettingsView: View {
 
             LabeledContent("Version", value: viewModel.appVersion)
                 .listRowBackground(AppColor.surface)
+        } header: {
+            Text("About")
+                .foregroundStyle(AppColor.textSecondary)
         }
     }
 }
 
+#if DEBUG
 #Preview("Light") {
     NavigationStack {
         SettingsView(viewModel: SettingsViewModel(tripRepository: PreviewTripRepository(), onDataDeleted: {}))
@@ -110,3 +117,4 @@ struct SettingsView: View {
     }
     .preferredColorScheme(.dark)
 }
+#endif

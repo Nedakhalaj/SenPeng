@@ -19,6 +19,7 @@ struct LoadErrorView: View {
             Label(title, systemImage: "wifi.exclamationmark")
         } description: {
             Text(error.message)
+                .foregroundStyle(AppColor.textSecondary)
         } actions: {
             Button("Try again") {
                 Task { await retry() }

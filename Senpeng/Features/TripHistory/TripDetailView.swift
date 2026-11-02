@@ -93,6 +93,7 @@ struct TripDetailView: View {
     }
 }
 
+#if DEBUG
 #Preview {
     NavigationStack {
         TripDetailView(
@@ -105,3 +106,4 @@ struct TripDetailView: View {
         )
     }
 }
+#endif

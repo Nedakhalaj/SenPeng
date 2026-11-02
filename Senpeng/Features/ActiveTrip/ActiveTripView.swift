@@ -15,8 +15,6 @@ struct ActiveTripView: View {
     var body: some View {
         NavigationStack {
             content
-                .padding(Spacing.l)
-                .frame(maxHeight: .infinity, alignment: .top)
                 .appBackground()
                 .navigationTitle("Your trip")
                 .navigationBarTitleDisplayMode(.inline)
@@ -44,29 +42,32 @@ struct ActiveTripView: View {
 
     /// The trip on the way, with its times and the option to remove it.
     private func following(trip: Trip, estimate: ArrivalEstimate?) -> some View {
-        VStack(spacing: Spacing.m) {
-            card(trip: trip) {
-                Text("Arrives \(trip.scheduledArrival, format: StockholmTime.clockTime)")
-                    .font(.title2.weight(.semibold))
-                    .monospacedDigit()
-                    .foregroundStyle(AppColor.textPrimary)
-                if let expected = estimate?.expected {
-                    Text("Expected \(expected, format: StockholmTime.clockTime)")
-                        .font(.subheadline)
+        ScrollView {
+            VStack(spacing: Spacing.m) {
+                card(trip: trip) {
+                    Text("Arrives \(trip.scheduledArrival, format: StockholmTime.clockTime)")
+                        .font(.title2.weight(.semibold))
                         .monospacedDigit()
-                        .foregroundStyle(AppColor.textSecondary)
+                        .foregroundStyle(AppColor.textPrimary)
+                    if let expected = estimate?.expected {
+                        Text("Expected \(expected, format: StockholmTime.clockTime)")
+                            .font(.subheadline)
+                            .monospacedDigit()
+                            .foregroundStyle(AppColor.textSecondary)
+                    }
+                    ActiveTripStatusBadge(minutesLate: estimate?.expectedMinutesLate)
                 }
-                ActiveTripStatusBadge(minutesLate: estimate?.expectedMinutesLate)
+
+                // iOS doesn't let the app measure the arrival in the background.
+                Text("Open Senpeng when you arrive, so the real arrival time can be saved.")
+                    .font(.subheadline)
+                    .foregroundStyle(AppColor.textSecondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-
-            // iOS doesn't let the app measure the arrival in the background.
-            Text("Open Senpeng when you arrive, so the real arrival time can be saved.")
-                .font(.subheadline)
-                .foregroundStyle(AppColor.textSecondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            Spacer()
-
+            .padding(Spacing.l)
+        }
+        // The content scrolls, so nothing is cut off at the largest text sizes.
+        .safeAreaInset(edge: .bottom) {
             Button(role: .destructive) {
                 isConfirmingRemoval = true
             } label: {
@@ -74,6 +75,7 @@ struct ActiveTripView: View {
                     .frame(maxWidth: .infinity)
             }
             .secondaryButtonStyle()
+            .padding(Spacing.l)
             .confirmationDialog("Remove this trip?", isPresented: $isConfirmingRemoval, titleVisibility: .visible) {
                 Button("Remove trip", role: .destructive) {
                     Task { await viewModel.removeTrip() }
@@ -84,21 +86,23 @@ struct ActiveTripView: View {
 
     /// The trip after arrival, with the measured arrival time.
     private func arrived(trip: Trip) -> some View {
-        VStack(spacing: Spacing.m) {
-            card(trip: trip) {
-                if let actualArrival = trip.actualArrival {
-                    Text("Arrived \(actualArrival, format: StockholmTime.clockTime)")
-                        .font(.title2.weight(.semibold))
-                        .monospacedDigit()
-                        .foregroundStyle(AppColor.textPrimary)
+        ScrollView {
+            VStack(spacing: Spacing.m) {
+                card(trip: trip) {
+                    if let actualArrival = trip.actualArrival {
+                        Text("Arrived \(actualArrival, format: StockholmTime.clockTime)")
+                            .font(.title2.weight(.semibold))
+                            .monospacedDigit()
+                            .foregroundStyle(AppColor.textPrimary)
+                    }
+                    ActiveTripStatusBadge(minutesLate: trip.minutesLate)
                 }
-                ActiveTripStatusBadge(minutesLate: trip.minutesLate)
+
+                ClaimHint(eligibility: viewModel.eligibility(for: trip))
             }
-
-            ClaimHint(eligibility: viewModel.eligibility(for: trip))
-
-            Spacer()
-
+            .padding(Spacing.l)
+        }
+        .safeAreaInset(edge: .bottom) {
             Button {
                 viewModel.dismissArrived()
             } label: {
@@ -106,6 +110,7 @@ struct ActiveTripView: View {
                     .frame(maxWidth: .infinity, minHeight: 36)
             }
             .primaryButtonStyle()
+            .padding(Spacing.l)
         }
     }
 

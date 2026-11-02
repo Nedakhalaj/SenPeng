@@ -64,7 +64,7 @@ struct DeparturesView<StartTrip: View>: View {
             ContentUnavailableView(
                 "No departures",
                 systemImage: "clock",
-                description: Text("No departures in the next hour.")
+                description: Text("No departures in the next hour.").foregroundStyle(AppColor.textSecondary)
             )
         case .loaded(let departures):
             List(departures) { departure in
@@ -86,6 +86,7 @@ struct DeparturesView<StartTrip: View>: View {
     }
 }
 
+#if DEBUG
 #Preview("Departures") {
     NavigationStack {
         DeparturesView(site: PreviewSiteRepository.sampleSites[0], repository: PreviewDepartureRepository()) { _ in
@@ -105,3 +106,4 @@ struct DeparturesView<StartTrip: View>: View {
     }
     .preferredColorScheme(.dark)
 }
+#endif

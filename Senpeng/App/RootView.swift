@@ -157,6 +157,7 @@ struct RootView: View {
     }
 }
 
+#if DEBUG
 #Preview("Light") {
     RootView(container: .preview)
 }
@@ -165,3 +166,4 @@ struct RootView: View {
     RootView(container: .preview)
         .preferredColorScheme(.dark)
 }
+#endif

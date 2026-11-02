@@ -52,6 +52,7 @@ struct TripSummaryCard: View {
     }
 }
 
+#if DEBUG
 #Preview {
     let scheduled = Date().addingTimeInterval(12 * 60)
     return TripSummaryCard(
@@ -63,3 +64,4 @@ struct TripSummaryCard: View {
     .padding(Spacing.l)
     .appBackground()
 }
+#endif

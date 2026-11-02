@@ -12,6 +12,7 @@ enum ColorAsset: String, CaseIterable {
     case separator
     // Xcode's default name for the app tint color.
     case accent = "AccentColor"
+    case onAccent
     case success
     case warning
     case danger

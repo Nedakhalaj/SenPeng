@@ -13,15 +13,18 @@ extension View {
         if #available(iOS 26, *) {
             buttonStyle(.glassProminent)
                 .controlSize(.large)
+                .foregroundStyle(AppColor.onAccent)
         } else {
             buttonStyle(.borderedProminent)
                 .controlSize(.large)
+                .foregroundStyle(AppColor.onAccent)
         }
     }
 
     /// Styles a button as a secondary action.
     ///
     /// Regular Liquid Glass on iOS 26 and later, a bordered button before.
+    /// The text is the primary text color, which stays readable on glass.
     ///
     /// - Returns: The button with the secondary action style.
     @ViewBuilder
@@ -29,9 +32,11 @@ extension View {
         if #available(iOS 26, *) {
             buttonStyle(.glass)
                 .controlSize(.large)
+                .foregroundStyle(AppColor.textPrimary)
         } else {
             buttonStyle(.bordered)
                 .controlSize(.large)
+                .foregroundStyle(AppColor.textPrimary)
         }
     }
 }
