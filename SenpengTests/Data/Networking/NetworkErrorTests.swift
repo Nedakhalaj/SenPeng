@@ -31,6 +31,7 @@ struct NetworkErrorTests {
             (NetworkError.offline, UserFacingError.offline),
             (.timeout, .serviceUnavailable),
             (.server(statusCode: 500), .serviceUnavailable),
+            (.rateLimited, .serviceUnavailable),
             (.invalidResponse, .unexpected),
             (.decoding, .unexpected),
             (.transport(code: 0), .unexpected)
